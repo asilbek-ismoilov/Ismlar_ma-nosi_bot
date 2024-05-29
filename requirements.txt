@@ -20,7 +20,7 @@ packaging==24.0
 pydantic==2.5.3
 pydantic_core==2.14.6
 python-dotenv==1.0.1
-requests==2.31.0
+requests==2.32.2
 six==1.16.0
 soupsieve==2.5
 typing_extensions==4.10.0

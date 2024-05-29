@@ -36,29 +36,6 @@ async def start_command(message:Message):
     except:
         await message.answer(text="Assalomu alaykum")
 
-@dp.message(F.text)
-async def ismmanosi(message:Message):
-    ism = message.text
-    ism = ism.replace("'","‘")
-    manosi = ism_manosi_funksiyasi(ism=ism)
-    text = f"{ism} manosi:\n{manosi}"
-    if manosi == False:
-        text = "Afsuski topilmadi 😢"
-    await message.answer(text=text)
-
-@dp.message(IsCheckSubChannels())
-async def kanalga_obuna(message:Message):
-    text = ""
-    inline_channel = InlineKeyboardBuilder()
-    for index,channel in enumerate(CHANNELS):
-        ChatInviteLink = await bot.create_chat_invite_link(channel)
-        inline_channel.add(InlineKeyboardButton(text=f"{index+1}-kanal",url=ChatInviteLink.invite_link))
-    inline_channel.adjust(1,repeat=True)
-    button = inline_channel.as_markup()
-    await message.answer(f"{text} kanallarga azo bo'ling",reply_markup=button)
-
-
-
 #help commands
 @dp.message(Command("help"))
 async def help_commands(message:Message):
@@ -69,7 +46,7 @@ async def help_commands(message:Message):
 #about commands
 @dp.message(Command("about"))
 async def about_commands(message:Message):
-    await message.answer("Sifat 2024")
+    await message.answer("Bot ismlar ma'nosini topib berad!")
 
 
 @dp.message(Command("admin"),IsBotAdminFilter(ADMINS))
@@ -106,6 +83,26 @@ async def send_advert(message:Message,state:FSMContext):
     await message.answer(f"Reklama {count}ta foydalanuvchiga yuborildi")
     await state.clear()
 
+@dp.message(F.text)
+async def ismmanosi(message:Message):
+    ism = message.text
+    ism = ism.replace("'","‘")
+    manosi = ism_manosi_funksiyasi(ism=ism)
+    text = f"✨ {ism} ma'nosi :\n{manosi}"
+    if manosi == False:
+        text = "Afsuski topilmadi 😢"
+    await message.answer(text=text)
+
+@dp.message(IsCheckSubChannels())
+async def kanalga_obuna(message:Message):
+    text = ""
+    inline_channel = InlineKeyboardBuilder()
+    for index,channel in enumerate(CHANNELS):
+        ChatInviteLink = await bot.create_chat_invite_link(channel)
+        inline_channel.add(InlineKeyboardButton(text=f"{index+1}-kanal",url=ChatInviteLink.invite_link))
+    inline_channel.adjust(1,repeat=True)
+    button = inline_channel.as_markup()
+    await message.answer(f"{text} kanallarga azo bo'ling",reply_markup=button)
 
 @dp.startup()
 async def on_startup_notify(bot: Bot):
